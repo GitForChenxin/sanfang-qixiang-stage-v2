@@ -15,5 +15,6 @@
     "side"
   ],
   "pbrMaps": 15,
-  "limitations": "Core courtyard geometry only; illustrative model, no new survey evidence or photogrammetry."
+  "limitations": "Core courtyard geometry only; illustrative model, no new survey evidence or photogrammetry.",
+  "sourceCommit": "218467d6192997500b8f5bc149d4a16e019bccb7"
 }
