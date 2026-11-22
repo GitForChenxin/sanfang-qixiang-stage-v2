@@ -1,4 +1,13 @@
-# 水榭戏台 · 三坊七巷近景 V2
+# 三坊七巷 · 水榭戏台 · Colab 画质增强 V4
+
+本轮以现有 V3-GIS 街区与院落模型为基线，接入 Colab 生成的 15 张 PBR 材质贴图及两张 1440×960 Cycles 预览。支持材质对比、三维漫游与光影预览切换；细节见 [V4-NOTES.md](./V4-NOTES.md)。
+
+- 免服务查看：双击 `sanfang-v4-preview.html`，全部模块、地图与图像均已内嵌。
+- 开发预览：双击 `Start-Preview.cmd`，打开 http://127.0.0.1:5178/ 。
+- 云端复现：[三坊七巷 Colab 画质工坊](https://colab.research.google.com/drive/1XNmy-72GhPB4vmSQ6zzFArxWrU_IKfBx)，上传 `colab/sanfang-input.zip`。
+- 可编辑模型：`colab/output/sanfang-courtyard-v4.blend`，原贴图已打包在模型中。
+
+已验证 GPU 渲染、图像尺寸及内容、15 张贴图的完整性与法线数据，以及 JavaScript / Python 语法。网页桌面、移动端交互与控制台尚待实机验收，不能用这些离线检查替代。
 
 水榭戏台近景原型；根据福州官源和实景照片人工建模，不是实景扫描，也不代表测绘尺寸。
 

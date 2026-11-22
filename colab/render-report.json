@@ -1,0 +1,19 @@
+{
+  "source": "Existing V3 GIS core courtyard geometry; illustrative, not a survey",
+  "meshInstances": 2686,
+  "meshBlocks": 444,
+  "gpu": [
+    "Tesla T4"
+  ],
+  "samples": 64,
+  "resolution": [
+    1440,
+    960
+  ],
+  "views": [
+    "front",
+    "side"
+  ],
+  "pbrMaps": 15,
+  "limitations": "Core courtyard geometry only; illustrative model, no new survey evidence or photogrammetry."
+}

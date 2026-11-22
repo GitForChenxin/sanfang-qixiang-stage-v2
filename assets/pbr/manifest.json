@@ -1,0 +1,33 @@
+{
+  "schema": "sanfang-pbr-v1",
+  "size": 1024,
+  "seed": 350102,
+  "generator": "Colab deterministic multiscale synthesis; no photographic reconstruction claim",
+  "materials": {
+    "lime": {
+      "color": "lime-color.png",
+      "normal": "lime-normal.png",
+      "roughness": "lime-roughness.png"
+    },
+    "wood": {
+      "color": "wood-color.png",
+      "normal": "wood-normal.png",
+      "roughness": "wood-roughness.png"
+    },
+    "granite": {
+      "color": "granite-color.png",
+      "normal": "granite-normal.png",
+      "roughness": "granite-roughness.png"
+    },
+    "roof": {
+      "color": "roof-color.png",
+      "normal": "roof-normal.png",
+      "roughness": "roof-roughness.png"
+    },
+    "slate": {
+      "color": "slate-color.png",
+      "normal": "slate-normal.png",
+      "roughness": "slate-roughness.png"
+    }
+  }
+}

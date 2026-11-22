@@ -1,0 +1,21 @@
+{
+  "source": "GitForChenxin/sanfang-qixiang-stage-v2 local V3-GIS worktree",
+  "files": [
+    {
+      "file": "renderer.mjs",
+      "sha256": "D18EBBADDA918E34A49EEE897E653B94289467ABBB7BCC95B028EEA7A4ADF9BC"
+    },
+    {
+      "file": "model.mjs",
+      "sha256": "4D4FBDF8E8F1078242D997077F7B503EBBCC3244E7E5CC227D10150A8C4FCF91"
+    },
+    {
+      "file": "index.html",
+      "sha256": "E90B0002DEF43843A1E46991984DFA56473DFEC95646967C2E9C97BD37E4B843"
+    },
+    {
+      "file": "SOURCES.md",
+      "sha256": "6540730AA41C16F507C9D1F54278BC5E1CDEFFF3BF72B9862C5AB55DDF913675"
+    }
+  ]
+}

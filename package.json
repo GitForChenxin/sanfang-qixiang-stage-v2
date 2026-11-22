@@ -1,0 +1,7 @@
+{
+  "name": "sanfang-colab-visual-workshop",
+  "private": true,
+  "type": "module",
+  "scripts": {"export:colab": "node colab/export-offline.mjs"},
+  "devDependencies": {"@napi-rs/canvas": "^0.1.80"}
+}

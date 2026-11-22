@@ -1,18 +1,488 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>水榭戏台 · 三坊七巷近景 V2</title><script type="importmap">{"imports":{"three":"./three.module.min.js"}}</script><style>
-:root{color-scheme:light;--ink:#222b26;--muted:#59635b;--paper:#f1eee4;--white:#fcfaf4;--line:#dcd7c9;--accent:#355748;}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","Noto Sans SC",sans-serif}main{max-width:1620px;margin:auto;padding:22px clamp(14px,3vw,46px)}header{display:flex;align-items:end;justify-content:space-between;gap:18px;padding:0 0 15px;border-bottom:1px solid var(--line);margin-bottom:16px}h1{font-family:"Songti SC","SimSun",serif;font-size:clamp(32px,4.6vw,62px);font-weight:600;margin:5px 0 0;letter-spacing:-.04em}.kicker{letter-spacing:.17em;font-weight:700;color:var(--accent);font-size:11px}button{font:inherit;cursor:pointer}button:focus-visible,#viewport:focus-visible{outline:3px solid #a87e41;outline-offset:3px}.label{font-size:12px;color:var(--muted);text-align:right}.layout{display:grid;grid-template-columns:minmax(0,1fr) 245px;gap:14px}.frame{position:relative;min-width:0;overflow:hidden;border-radius:8px;background:#aeb9b2;box-shadow:0 8px 25px #25332c23}.frame,.view{height:clamp(490px,70vh,835px)}.view{width:100%;cursor:grab;touch-action:none}.view.drag{cursor:grabbing}canvas{display:block;width:100%;height:100%}.onscene{position:absolute;left:15px;top:15px;padding:7px 9px;border-radius:3px;background:#17271cde;color:#fbf7ec;font-size:11px;pointer-events:none;letter-spacing:.06em}.zoom{position:absolute;bottom:13px;right:13px;display:flex;gap:4px}button.zoom-btn{font-size:18px;width:35px;height:35px;border:1px solid #d8d2c7;border-radius:4px;background:#fbf8edee;color:#23362b}
-aside{border:1px solid var(--line);background:var(--white);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px}h2{font-size:15px;margin:0 0 5px}aside button:not(.simple){text-align:left;border:1px solid var(--line);background:transparent;color:var(--ink);padding:9px;border-radius:4px;font-size:13px;display:flex;gap:8px;align-items:center}aside button[aria-pressed="true"]{background:#e4eae2;border-color:#8fa196;color:#254437;font-weight:700}aside button:hover{border-color:#5f7c6a}aside i{font-size:10px;font-style:normal;color:var(--muted);font-variant-numeric:tabular-nums}.desc,.controls,.small{color:var(--muted);font-size:11px;line-height:1.65;margin:4px 0}.desc{min-height:39px}.simple{border:none;text-align:left;background:none;color:#325b43;padding:4px 0;font-size:12px}.sources{border-top:1px solid var(--line);padding-top:9px;margin-top:4px;color:var(--muted);font-size:11px;line-height:1.6}a{color:#325941;text-underline-offset:3px}.status{position:absolute;left:13px;bottom:12px;color:#fff;background:#17271cdb;padding:5px 8px;border-radius:3px;font-size:10px;pointer-events:none}dialog{padding:15px;width:min(850px,93vw);border:1px solid var(--line);border-radius:8px;color:var(--ink);background:var(--white)}dialog::backdrop{background:#162018d0}dialog header{margin-bottom:9px;padding-bottom:8px}dialog img{display:block;margin:auto;max-width:100%;max-height:72vh;object-fit:contain}
-@media(max-width:840px){.layout{grid-template-columns:1fr}.frame,.view{height:clamp(340px,62vh,650px)}aside{display:grid;grid-template-columns:1fr 1fr;gap:7px}aside h2,aside .desc,aside .controls,aside .sources{grid-column:1/-1}.desc{min-height:0}main{padding-top:12px}}@media(max-width:460px){header .label{max-width:110px}.frame,.view{height:52vh;min-height:310px}}
-</style></head>
-<body><main><header><div><div class="kicker">福州 · 衣锦坊 #04 · 近景 V2</div><h1>隔水看戏</h1></div><div class="label">水榭戏台<br>参考照片人工还原 · 非扫描</div></header>
-<div class="layout"><section class="frame"><div class="view" id="viewport" tabindex="0" role="region" aria-label="水榭戏台互动三维场景"></div><div class="onscene">衣锦坊水榭戏台 · 建筑近景</div><p id="status" class="status" role="status">正在载入三维场景</p><div class="zoom"><button id="zoom-out" class="zoom-btn" type="button" aria-label="缩小">−</button><button id="zoom-in" class="zoom-btn" type="button" aria-label="放大">＋</button></div></section>
-<aside><h2>从哪里看</h2>
-<button type="button" data-view="front" data-note="站在花厅一侧的 1.6 米视角。隔着一池水，正看杉木戏台。"><i>01</i>花厅 · 隔池正看</button>
-<button type="button" data-view="side" data-note="换到池岸侧面，观察四柱、架空台身和檐角起翘。"><i>02</i>池岸 · 斜看戏台</button>
-<button type="button" data-view="roof" data-note="靠近檐下，辨认瓦垄、弓梁和细密的椽木。"><i>03</i>檐下 · 看构件</button>
-<button type="button" data-view="hall" data-note="转身面向北侧花厅：戏台与看戏的位置由水面分开。"><i>04</i>回看 · 对岸花厅</button>
-<p class="desc" id="view-note"></p><p class="controls">拖动转视角，滚轮缩放。键盘也可用方向键和 + / −。</p>
-<button type="button" class="simple" id="reset">恢复隔池视角 ↺</button><button type="button" class="simple" id="photo-open">看实景照片 ↗</button>
-<button type="button" class="simple" id="save-view">保存当前画面 ↓</button><div class="sources">闽都古厝 · 水上方形四柱戏台<br>模型尺寸和未见细节为示意。<br><a href="./SOURCES.md" target="_blank" rel="noopener">来源与模型边界 ↗</a></div></aside></div></main>
-<dialog id="photo"><header><h2>实景照片 · 水榭戏台</h2><button type="button" id="photo-close">关闭</button></header><img src="./reference.jpg" alt="衣锦坊水榭戏台实景照片"><p class="small"><a href="https://commons.wikimedia.org/wiki/File:Water-side_Performing_Stage_at_Yijin_Lane%2C_2019-09-29_20.jpg" target="_blank" rel="noopener">Siyuwj / Wikimedia Commons</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> · 不是模型截图。</p></dialog>
-<script type="module" src="./renderer.mjs"></script></body></html>
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="icon" href="data:,">
+  <title>三坊七巷 · 水榭戏台 · 光影增强 V4</title>
+  <script type="importmap">{"imports":{"three":"./three.module.min.js"}}</script>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #202a25;
+      --muted: #58635b;
+      --paper: #f1eee4;
+      --white: #fcfaf4;
+      --line: #dcd7c9;
+      --accent: #355748;
+      --accent-soft: #e4eae2;
+      --warn-bg: #f6efe2;
+      --warn-border: #d7c39c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+    }
+    main {
+      max-width: 1640px;
+      margin: auto;
+      padding: 20px clamp(14px, 3vw, 44px);
+    }
+    header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 0 14px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: "Songti SC", "SimSun", "Noto Serif SC", serif;
+      font-size: clamp(28px, 4.2vw, 54px);
+      font-weight: 600;
+      margin: 4px 0 0;
+      letter-spacing: -.03em;
+    }
+    .kicker {
+      letter-spacing: .16em;
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 11px;
+    }
+    button { font: inherit; cursor: pointer; }
+    button:focus-visible, #viewport:focus-visible, summary:focus-visible {
+      outline: 3px solid #a87e41;
+      outline-offset: 2px;
+    }
+    .label {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.55;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 284px;
+      gap: 14px;
+      align-items: start;
+    }
+    .frame {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: #c8d6dc;
+      box-shadow: 0 8px 26px #22302a22;
+      border: 1px solid #d2cec0;
+    }
+    .frame, .view {
+      height: clamp(520px, 74vh, 860px);
+    }
+    .view {
+      width: 100%;
+      cursor: grab;
+      touch-action: none;
+    }
+    .view.drag { cursor: grabbing; }
+    canvas { display: block; width: 100%; height: 100%; }
+    .onscene {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      padding: 7px 10px;
+      border-radius: 4px;
+      background: #17271cd9;
+      color: #fbf7ec;
+      font-size: 11px;
+      pointer-events: none;
+      letter-spacing: .05em;
+    }
+    .status {
+      position: absolute;
+      left: 14px;
+      bottom: 12px;
+      margin: 0;
+      color: #fff;
+      background: #17271cd9;
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: 11px;
+      pointer-events: none;
+    }
+    .zoom {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      display: flex;
+      gap: 5px;
+    }
+    button.zoom-btn {
+      font-size: 18px;
+      width: 35px;
+      height: 35px;
+      border: 1px solid #d8d2c7;
+      border-radius: 4px;
+      background: #fbf8edee;
+      color: #23362b;
+    }
+    button.zoom-btn:hover { background: #fff; border-color: #7c9385; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* WebGL 不可用时的文字 + 照片降级界面 */
+    .fallback {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      background: var(--white);
+      color: var(--ink);
+      padding: 20px 22px 24px;
+      z-index: 10;
+    }
+    .fallback[hidden] { display: none; }
+    .fallback-banner {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 6px;
+      padding: 10px 13px;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .fallback-banner strong { color: #664918; }
+    .fallback-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.05fr) minmax(240px, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+    .fallback figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+      background: #f5f2e9;
+    }
+    .fallback figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 340px;
+      object-fit: cover;
+    }
+    .fallback figcaption {
+      padding: 8px 10px;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .fallback h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+      color: var(--accent);
+    }
+    .fallback ul {
+      margin: 0 0 10px;
+      padding-left: 17px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .fallback li { margin-bottom: 4px; }
+    .fallback-note {
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+      line-height: 1.6;
+    }
+
+    aside {
+      border: 1px solid var(--line);
+      background: var(--white);
+      border-radius: 8px;
+      padding: 14px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    h2 { font-size: 14px; margin: 0 0 3px; }
+    .subhead {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .08em;
+      margin: 6px 0 2px;
+      padding-top: 6px;
+      border-top: 1px solid var(--line);
+    }
+    aside button:not(.simple) {
+      text-align: left;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--ink);
+      padding: 8px 10px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    aside button[aria-pressed="true"] {
+      background: var(--accent-soft);
+      border-color: #8fa196;
+      color: #254437;
+      font-weight: 700;
+    }
+    aside button:not(:disabled):hover { border-color: #5f7c6a; }
+    aside i {
+      font-size: 10px;
+      font-style: normal;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .mode-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin: 2px 0;
+    }
+    aside .mode-switch button {
+      justify-content: center;
+      padding: 6px 8px;
+      font-size: 11.5px;
+    }
+    .desc, .controls, .small {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.58;
+      margin: 2px 0;
+    }
+    .desc { min-height: 48px; }
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      border-top: 1px solid var(--line);
+      padding-top: 6px;
+    }
+    .simple {
+      border: none;
+      text-align: left;
+      background: none;
+      color: #2e5640;
+      padding: 3.5px 0;
+      font-size: 12px;
+    }
+    .simple:hover:not(:disabled) { text-decoration: underline; }
+    .sources {
+      border-top: 1px solid var(--line);
+      padding-top: 7px;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    details.notes {
+      margin-top: 5px;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 6px 8px;
+      background: #f8f5ec;
+    }
+    details.notes summary {
+      cursor: pointer;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 11px;
+    }
+    details.notes ul {
+      margin: 6px 0 2px;
+      padding-left: 15px;
+      font-size: 10.5px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+    a { color: #2f573f; text-underline-offset: 3px; }
+    dialog {
+      padding: 16px;
+      width: min(860px, 93vw);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: var(--white);
+    }
+    dialog::backdrop { background: #162018d0; }
+    .visual-toolbar {display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 12px;}
+    .visual-toolbar button {border:1px solid var(--line);border-radius:5px;background:var(--white);color:var(--ink);padding:8px 18px;font-size:12px;}
+    .visual-toolbar button[aria-pressed="true"] {background:var(--accent);color:#fff;border-color:var(--accent);}
+    .visual-toolbar span {color:var(--muted);font-size:11px;margin-left:auto;}
+    .render-preview {position:absolute;inset:0;background:#d8d7ce;z-index:12;}
+    .render-preview[hidden] {display:none;}
+    .render-preview img {width:100%;height:100%;object-fit:contain;display:block;}
+    .render-caption {position:absolute;left:14px;bottom:12px;padding:7px 12px;color:#fff;background:#17271cdd;border-radius:4px;font-size:12px;}
+    .render-views {position:absolute;right:12px;top:12px;display:flex;gap:5px;}
+    .render-views button {background:#fbf8edec;border:1px solid #d8d2c7;border-radius:4px;padding:7px 10px;font-size:12px;}
+    .render-views button[aria-pressed="true"] {background:#355748;color:#fff;}
+    dialog header { margin-bottom: 9px; padding-bottom: 8px; }
+    dialog img {
+      display: block;
+      margin: auto;
+      max-width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .frame, .view { height: clamp(380px, 62vh, 660px); }
+      aside { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+      aside h2, aside .subhead, aside .desc, aside .controls, aside .actions, aside .sources { grid-column: 1 / -1; }
+      .desc { min-height: 0; }
+      .fallback-grid { grid-template-columns: 1fr; }
+      main { padding-top: 12px; }
+    }
+    @media (max-width: 480px) {
+      header .label { max-width: 135px; }
+      .frame, .view { height: 54vh; min-height: 330px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <div class="kicker">福州 · 三坊七巷 1:1 真实地理街区 · 衣锦坊 #04 水榭戏台</div>
+        <h1>隔水看戏 · 三坊七巷</h1>
+      </div>
+      <div class="label">
+        1:1 OSM 真实建筑轮廓与路网 + 水榭戏台精建<br>
+        参考官源、实拍与公开 GIS 人工还原 · 非测绘扫描
+      </div>
+    </header>
+
+    <div class="visual-toolbar" role="group" aria-label="三维探索与光影预览">
+      <button id="mode-live" type="button" aria-pressed="true">三维漫游</button>
+      <button id="mode-render" type="button" aria-pressed="false">光影预览</button>
+      <span>细看木构、灰墙与一池倒影</span>
+    </div>
+    <div class="layout">
+      <section class="frame">
+        <div class="view" id="viewport" tabindex="0" role="region" aria-label="三坊七巷与衣锦坊水榭戏台互动三维场景"></div>
+        <div class="onscene" id="scene-badge">衣锦坊 4 号水榭戏台 · 三坊七巷历史街区（全区示意）</div>
+        <p id="status" class="status" role="status">正在载入三维场景</p>
+        <div class="zoom" id="zoom-controls">
+          <button id="zoom-out" class="zoom-btn" type="button" aria-label="缩小">−</button>
+          <button id="zoom-in" class="zoom-btn" type="button" aria-label="放大">＋</button>
+        </div>
+        <div id="render-preview" class="render-preview" hidden>
+          <img id="render-image" src="./assets/renders/front.png" alt="隔池正看水榭戏台的 Colab 光影预览" loading="lazy">
+          <div id="render-caption" class="render-caption">隔池正看 · 柔和天光与杉木构架</div>
+          <div class="render-views" role="group" aria-label="光影预览视角">
+            <button type="button" data-render="front" aria-pressed="true">隔池正看</button>
+            <button type="button" data-render="side" aria-pressed="false">池岸斜看</button>
+          </div>
+        </div>
+
+        <!-- WebGL 不可用时的文字 + 照片降级界面 -->
+        <div id="webgl-fallback" class="fallback" hidden role="region" aria-label="WebGL 不可用图文降级说明">
+          <div class="fallback-banner">
+            <strong>三维渲染（WebGL）当前不可用</strong>：请在支持 WebGL 2 并开启硬件加速的现代浏览器中打开本页。下方提供衣锦坊 4 号水榭戏台实景照片与三坊七巷建筑格局文字说明。
+          </div>
+          <div class="fallback-grid">
+            <figure>
+              <img src="./reference.jpg" alt="福州三坊七巷衣锦坊 4 号水榭戏台实景照片（Siyuwj #20）">
+              <figcaption>
+                实拍参考（斜拍 #20）：
+                <a href="https://commons.wikimedia.org/wiki/File:Water-side_Performing_Stage_at_Yijin_Lane%2C_2019-09-29_20.jpg" target="_blank" rel="noopener">Siyuwj / Wikimedia Commons #20</a> ·
+                <a href="https://commons.wikimedia.org/wiki/File:Water-side_Performing_Stage_at_Yijin_Lane%2C_2019-09-29_24.jpg" target="_blank" rel="noopener">正拍 #24</a> ·
+                <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>
+              </figcaption>
+            </figure>
+            <div>
+              <h3>衣锦坊 4 号水榭戏台与三坊七巷鱼骨格局</h3>
+              <ul>
+                <li><strong>核心水榭戏台：</strong>约 60 ㎡ 水池立四根花岗岩石墩，上承石梁与约 30 ㎡（5.5×5.5m 非实测）杉木台面；四柱内收，台边雕花挂板（示意）与三面低木栏；九脊歇山顶福州大翘角，瓦垄/瓦当/密集椽木、雕花弓梁、垂莲柱、三层方形藻井（纹样示意），后墙淡墨山水壁画（示意）。</li>
+                <li><strong>院落与花厅：</strong>仅西侧设白灰曲线福建马鞍墙与带雪洞矮墙（非徽派马头墙）；池北岸为连续浮雕花卉石栏，对岸为双层前廊后堂花厅与 12 扇朝南木格门窗（细部示意）。</li>
+                <li><strong>三坊七巷完整鱼骨格局（示意）：</strong>以南北向<strong>南后街</strong>为中轴（南北牌坊、骑楼商铺、红灯笼），西侧自北向南排布<strong>衣锦坊、文儒坊、光禄坊</strong>（三坊），东侧自北向南排布<strong>杨桥巷、郎官巷、塔巷、黄巷、安民巷、宫巷、吉庇巷</strong>（七巷），含安民巷口网红爱心树、小黄楼园林、光禄吟台、南端安泰河与闽派曲线马鞍墙深宅院落群（整体尺度与细部均为示意）。</li>
+              </ul>
+              <p class="fallback-note">
+                注：本项目系据官源文献、Siyuwj #20/#24 实拍及公开街景资料人工还原，非三维扫描或测绘方案；凡无实测依据的尺度与细部均标注「示意」。详见 <a href="./SOURCES.md" target="_blank" rel="noopener">SOURCES.md</a>。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside>
+        <h2>水榭戏台 · 核心视角</h2>
+        <button type="button" data-view="front" data-note="对岸花厅一侧约 1.6m 眼高隔池正看：约 60㎡ 水池中四根花岗岩石墩承石梁与 5.5×5.5m 戏台，池北为连续浮雕花卉石栏，后墙为淡墨山水壁画（细节示意）。"><i>01</i>花厅 · 隔池正看</button>
+        <button type="button" data-view="side" data-note="东北池岸斜看（呼应 Siyuwj #20）：见四柱内收、台边雕花挂板与三面低木栏、九脊歇山福州大翘角，以及仅设于西侧的白灰曲线福建马鞍墙与带雪洞矮墙（示意）。"><i>02</i>池岸 · 斜看戏台</button>
+        <button type="button" data-view="roof" data-note="近看檐下与屋盖：瓦垄、瓦当、密集椽木与扇形角椽，檐下雕花弓梁、垂莲柱及三层方形藻井（构件细部与藻井纹样为示意）。"><i>03</i>檐下 · 看构件</button>
+        <button type="button" data-view="hall" data-note="回看池北岸连续浮雕花卉石栏与对岸双层前廊后堂花厅，后堂朝南设 12 扇木格门窗，远处可见衣锦坊与南后街古厝天际线（示意）。"><i>04</i>回看 · 对岸花厅</button>
+
+        <div class="subhead">三坊七巷 · 1:1 真实地理全区</div>
+        <button type="button" id="district-overview"><i>全</i>三坊七巷 · 1:1 真实俯瞰</button>
+        <button type="button" id="nanhou-street"><i>轴</i>南后街北口 · 牌坊与骑楼</button>
+        <button type="button" id="heart-tree-view"><i>树</i>安民巷口 · 网红爱心树</button>
+
+        <div class="subhead">探索模式与天光氛围</div>
+        <div class="mode-switch" role="group" aria-label="材质画质对比">
+          <button type="button" id="quality-enhanced" aria-pressed="true">细腻材质</button>
+          <button type="button" id="quality-original" aria-pressed="false">原版材质</button>
+        </div>
+        <div class="mode-switch" role="group" aria-label="探索控制模式">
+          <button type="button" id="mode-orbit" aria-pressed="true">轨道环视</button>
+          <button type="button" id="mode-walk" aria-pressed="false">第一人称漫步</button>
+        </div>
+        <div class="mode-switch" role="group" aria-label="白昼与夜景切换">
+          <button type="button" id="time-day" aria-pressed="true">晴日白昼</button>
+          <button type="button" id="time-dusk" aria-pressed="false">华灯初上（示意）</button>
+        </div>
+
+        <p class="desc" id="view-note"></p>
+        <p class="controls" id="controls-hint">左键拖拽旋转，右键/Shift+左键平移，滚轮缩放，双击场景飞至该处；随时按 WASD 行走、Q/E 升降、方向键微调。</p>
+
+        <div class="actions">
+          <button type="button" class="simple" id="reset">恢复隔池视角 ↺</button>
+          <button type="button" class="simple" id="photo-open">看实景照片（#20/#24） ↗</button>
+          <button type="button" class="simple" id="save-view">保存当前画面 ↓</button>
+        </div>
+
+        <div class="sources">
+          南后街中轴 · 西三坊 · 东七巷 · 水榭戏台<br>
+          <a href="./SOURCES.md" target="_blank" rel="noopener">官源、照片授权与模型边界 ↗</a>
+          <details class="notes">
+            <summary>「示意」标注清单（无测绘依据项）</summary>
+            <ul>
+              <li>水池 6.85×8.80m（约 60㎡）与台面 5.5×5.5m（约 30㎡）系依面积推定，非实测</li>
+              <li>石墩石梁截面、雕花挂板/石栏浮雕/藻井团鹤纹样与后墙淡墨山水壁画（示意）</li>
+              <li>瓦垄/瓦当/椽木排布密度、弓梁透雕、垂莲柱、西侧马鞍墙与雪洞轮廓（示意）</li>
+              <li>双层花厅二层格局、12 扇木格窗棂图案与座椅灯笼（示意）</li>
+              <li>全区 682 栋建筑轮廓与 86 条曲折街巷采用 1:1 OpenStreetMap 真实地理底图（ODbL）；建筑檐高、马鞍墙具体曲率、明清木构骑楼与民国红/青砖洋楼立面细部、牌坊匾额、爱心树冠与华灯初上夜景氛围为示意</li>
+            </ul>
+          </details>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <dialog id="photo">
+    <header>
+      <h2>实景照片 · 福州衣锦坊 4 号水榭戏台</h2>
+      <button type="button" id="photo-close">关闭</button>
+    </header>
+    <img src="./reference.jpg" alt="衣锦坊水榭戏台实景照片（Siyuwj #20）">
+    <p class="small">
+      本地缩小副本为 Siyuwj 2019-09-29 斜拍 #20：
+      <a href="https://commons.wikimedia.org/wiki/File:Water-side_Performing_Stage_at_Yijin_Lane%2C_2019-09-29_20.jpg" target="_blank" rel="noopener">Wikimedia Commons #20（斜拍）</a> ·
+      <a href="https://commons.wikimedia.org/wiki/File:Water-side_Performing_Stage_at_Yijin_Lane%2C_2019-09-29_24.jpg" target="_blank" rel="noopener">Wikimedia Commons #24（正拍）</a> ·
+      <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> · 仅作人工建模对照，不是模型截图或贴图。
+    </p>
+  </dialog>
+
+  <script type="module" src="./renderer.mjs"></script>
+</body>
+</html>
