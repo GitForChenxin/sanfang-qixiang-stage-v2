@@ -37,7 +37,7 @@ cells = [cell("markdown", """
         return completed.stdout
     print(checked(['nvidia-smi', '--query-gpu=name,memory.total', '--format=csv']))
     if not (BASE / '.git').exists():
-        checked(['git','clone','--no-checkout',REPOSITORY,str(BASE)])
+        checked(['git','clone',REPOSITORY,str(BASE)])
     checked(['git','fetch','origin',GIT_REF], cwd=BASE)
     if checked(['git','status','--porcelain'], cwd=BASE).strip():
         raise RuntimeError('Workspace has changes; save them before switching Git ref.')
