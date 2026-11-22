@@ -27,7 +27,8 @@ Colab 浏览器会话与 Codex 的云端环境相互独立。此项目没有创�
 ## Google Cloud
 项目：project-53603ed3-8236-40ec-90a；区域：asia-east1。
 建议服务名：sanfang-qixiang；若已有同名服务，先检查再更新。
-部署入口：bash deploy/cloud-run.sh（需要已授权 gcloud）。
+部署入口：在已经授权的 Cloud Shell 中运行 bash deploy/cloud-run.sh（需要 gcloud 与 Docker）。
+该脚本使用当前用户身份在 Cloud Shell 构建并推送镜像，使用项目中已创建的 cloud-run-source-deploy 镜像库；不需要额外授予默认构建账号 roles/run.builder。
 部署源为 dist/cloudrun，包含 Dockerfile、server.py、public/；Python 3.12，非 root 用户运行。
 参数：1 CPU / 512Mi，按请求计费，min=0，max=1，concurrency=40，timeout=60s，默认 IAM 私有。
 不配置自定义域名、GPU、数据库或长期密钥。
